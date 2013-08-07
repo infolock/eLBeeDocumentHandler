@@ -112,6 +112,7 @@ When you get that down, you'll want to realize that the implementation and usage
     dispatch_async(queue, ^{
         [[eLBeeDocumentHandler sharedDocumentHandler] performWithDocument:^(UIManagedDocument *document) {
             if(document) {
+               // Keeping the document on the main thread (and anything that maybe on the main thread the setter may interact with - like a tableview ..)
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [weakSelf setDocument:document];
                 });
