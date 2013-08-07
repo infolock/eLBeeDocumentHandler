@@ -63,7 +63,7 @@ When you get that down, you'll want to realize that the implementation and usage
 
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-//    [self.document.managedObjectContext refreshObject:self.myList mergeChanges:self.document.managedObjectContext.hasChanges];
+//    [self.document.managedObjectContext refreshObject:self.person mergeChanges:self.document.managedObjectContext.hasChanges];
 }
 
 -(void)didReceiveMemoryWarning {
