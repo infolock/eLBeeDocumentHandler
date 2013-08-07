@@ -121,6 +121,34 @@ When you get that down, you'll want to realize that the implementation and usage
     });
 }
 
+
+-(void)saveDocument {
+    [self saveDocumentWithCompletion:nil];
+}
+
+-(void)saveDocumentWithCompletion:(void (^)(BOOL success))block {
+
+    if(self.document.managedObjectContext.hasChanges) {
+        [self.document.managedObjectContext refreshObject:self.person mergeChanges:YES];
+    }
+
+    NSManagedObjectContext *context = self.document.managedObjectContext;
+    NSSet *inserts = [context insertedObjects];
+    if([inserts count] > 0) {
+        NSError *error = nil;
+        if([context obtainPermanentIDsForObjects:[inserts allObjects] error:&error] == NO && error) {
+            NSLog(@"\n\n=========================\nERROR obtaining PermanentIds! %@  >>>> Desc: %@  >>> REASON: %@", error, error.localizedDescription, error.localizedFailureReason);
+            NSLog(@"\n=========================\nExtended Information Regarding PermanentIds: [%@ %@] %@ (%@)\n\n", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [error localizedDescription], [error localizedFailureReason]);
+            return;
+        }
+    }
+    [self.document updateChangeCount:UIDocumentChangeDone];
+    [self.document saveToURL:self.document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
+        if(block != nil) block(success);
+    }];
+}
+
+
 /* All of your tableview controller logic goes here.... just using self.document or self.person as needed... */
 
 @end
