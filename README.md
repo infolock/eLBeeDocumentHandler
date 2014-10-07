@@ -1,6 +1,8 @@
 eLBeeDocumentHandler
 ====================
 
+![Unmaintained](https://img.shields.io/badge/%E2%9A%A0-unmaintained-red.svg?style=flat)
+
 ## About
 This is a small UIManagedDocument handler I use for working with UIManagedDocument and Core Data.  
 
